@@ -1,0 +1,8 @@
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+conda install scipy
+conda install -c simpleitk simpleitk
+conda install -c open3d-admin open3d
+conda install -c conda-forge pydicom
+conda install -c anaconda scikit-image
+conda install -c conda-forge matplotlib
+conda install -c conda-forge tqdm
