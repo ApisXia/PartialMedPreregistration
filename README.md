@@ -1,5 +1,5 @@
 # Data-driven Multi-Modal Partial Medical Image Preregistration by Template Space Patch Mapping (MICCAI 2022)
-![](figures/proposed_workflow_color.png)
+![](figures/workflow.jpg)
 Our paper introduces a template-space patch mapping (TSPM) method providing reliable initialization for local-search registration in rigid multi-modal partial image registration. 
 Instead of matching two images directly, we register the two images to a common template space using a pre-trained neural network. We use patch-based mapping to handle images of diverse sizes and a RANSAC-based fitting algorithm to remove outliers. The network is trained with manually registered images. We then run traditional local search registration on the given initialization to obtain the final registration result.
 
