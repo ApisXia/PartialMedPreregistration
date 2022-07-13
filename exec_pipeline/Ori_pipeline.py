@@ -52,16 +52,14 @@ class OriginalMatch(object):
 
 
 if __name__ == '__main__':
-    fold = 0
+    data_dir = '../data_rel/our_better'
 
-    split_file = '/home2/reg/dataset/CT_3DRA_split_no46.npz'
-    split_load = np.load(split_file)['split_{}'.format(fold)]
-    case_name = split_load[1]
-    sa_p = 'temp_save/' + case_name
-
-    or_p = list(glob('/home2/reg/dataset/GpR/{}/3DRA/Original/*'.format(case_name)))[0]
-    # or_p = list(glob('/media/apis/WDSSD/Igarashi_Lab_Projs/Proj_MRA_Reg/Dataset/GpR/{}/3DRA/Registrated/*'.format(case_name)))[0]
-    ct_p = '/home2/reg/dataset/GpR/{}/CT'.format(case_name)
+    case_list = list(glob(data_dir + '/*'))
+    case_name = case_list[0]
+    sa_p = 'registration_Ori_save/' + case_name.split('\\')[-1]
+    os.makedirs(sa_p, exist_ok=True)
+    or_p = list(glob(case_name + '/3DRA/Original/*'))[0]
+    ct_p = case_name + '/CT'
 
     ori_matcher = OriginalMatch(or_p)
-    ori_matcher.match(ct_p, sa_p)
+    ori_matcher.match(ct_p, sa_p, iter_num=500, metric='mse')

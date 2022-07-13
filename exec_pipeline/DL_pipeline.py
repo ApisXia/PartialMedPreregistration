@@ -19,7 +19,7 @@ class DeepLearningMatch(object):
                  basic_scale=0.5813953391663639,
                  basic_shift_z=12,
                  basic_ct_translation=np.asarray([-109.94100, -104.31600, -643.50000]),
-                 basic_ct_info_path='DL_utils/ct_3dra_scaled_basic.npz',
+                 basic_ct_info_path='../data_rel/ct_3dra_scaled_basic.npz',
                  batch_size=8,
                  num_workers=12,
                  patch_num=100,
@@ -167,7 +167,7 @@ class DeepLearningMatch(object):
                                               init_3dra_matrix=mra_init_matrix.copy(),
                                               init_ct_matrix=ct_init_matrix_inv.copy(),
                                               ori_ops=True,
-                                              metric='nmi',
+                                              metric='mse',
                                               iter_num=iter_num)
 
         refine_matrix = get_matrix_we_use(refine_matrix.copy(), self.new_pixels.shape)
@@ -200,27 +200,18 @@ class DeepLearningMatch(object):
 
 
 if __name__ == '__main__':
-    fold = 0
+    data_dir = '../data_rel/our_better'
 
-    split_file = '/home2/reg/dataset/CT_3DRA_split.npz'
-    split_load = np.load(split_file)['split_{}'.format(fold)]
-    case_name = split_load[0]
-    sa_p = 'temp_save/' + case_name
-    os.makedirs(sa_p, exist_ok=True)
-    or_p = list(glob('/home2/reg/dataset/GpR/{}/3DRA/Original/*'.format(case_name)))[0]
-    ct_p = '/home2/reg/dataset/GpR/{}/CT'.format(case_name)
+    case_list = list(glob(data_dir + '/*'))
+    case_name = case_list[0]
+    sa_p_wf = 'registration_DL_wf_save/' + case_name.split('\\')[-1]
+    sa_p_wo = 'registration_DL_wo_save/' + case_name.split('\\')[-1]
+    os.makedirs(sa_p_wo, exist_ok=True)
+    os.makedirs(sa_p_wf, exist_ok=True)
+    or_p = list(glob(case_name + '/3DRA/Original/*'))[0]
+    ct_p = case_name + '/CT'
 
-    # gt_p = list(glob('/media/apis/WDSSD/Igarashi_Lab_Projs/Proj_MRA_Reg/Dataset/GpR_mhd_center_aligned_128_16_new/{}/ct_3dra_scaled.npz'.format(case_name)))[0]
-    # gt_load = np.load(gt_p)
-    # gt_ct_align = gt_load['matrix_ct_aligned']
-    # gt_ra_trans = gt_load['matrix_3dra']
-
-    # DL_matcher = DeepLearningMatch(or_p, expand_dims=32,
-    #                                checkpoint_path='DL_utils/checkpoint_expand_fold0.tar')
     DL_matcher = DeepLearningMatch(or_p)
-    # DL_matcher = DeepLearningMatch(or_p, ct_align=gt_ct_align, ra_trans=gt_ra_trans)
-    DL_matcher.match_to_ori_file(ct_p, sa_p)
-    c = 1
-    # eval_matrix = DL_matcher.match_to_template(save_ops=False)
-    # eval_pred, eval_ori, gt_loc = DL_matcher.evaluator.eval_registration_for_vis()
+
+    DL_matcher.match_to_ori_wwo_refine(ct_p, sa_p_wo, sa_p_wf, iter_num=500, metric='mse')
 

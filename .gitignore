@@ -127,4 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/data/
+/data_rel/
+/exec_pipeline/registration_Ori_save/
+/exec_pipeline/registration_DL_wf_save/
+/exec_pipeline/registration_DL_wo_save/

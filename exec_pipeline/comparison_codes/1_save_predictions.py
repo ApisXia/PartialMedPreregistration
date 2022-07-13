@@ -9,7 +9,6 @@ import itertools
 def gen_all_kinds_predictions(fold, base_path):
     split_file = 'D:\\Igarashi_Lab_Projs\\Proj_MRA_Reg\\Reg_Release\\data_rel\\CT_3DRA_split_no46.npz'
     split_load = list(np.load(split_file)['split_{}'.format(fold)])
-    # split_load.remove('GpR19')
     os.makedirs(base_path, exist_ok=True)
     f = open(base_path + '/bad_files.txt', 'w')
 

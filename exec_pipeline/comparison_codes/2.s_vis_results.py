@@ -2,10 +2,10 @@ import copy
 import open3d as o3d
 from glob import glob
 from basic_utils.show_data import load_dcm, get_iso_surface, to_show_surface
-from post_DL_utils.rigid_matrix_from_predictions import matrix_diff_analysis
+from exec_pipeline.post_DL_utils.rigid_matrix_from_predictions import matrix_diff_analysis
 
 if __name__ == "__main__":
-    ori_data_dir = 'results_mse_samp_f2_1/ori'
+    ori_data_dir = 'registration_save/results_mse_samp_f2_1/ori'
     dl_data_dir = 'results_mse_samp_f2_1/DL_wf/{}'
     ori_case_list = list(glob(ori_data_dir + '/*'))
     gt_path = '/home2/reg/dataset/GpR/%s/3DRA/Registrated/*'
